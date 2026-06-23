@@ -1,6 +1,7 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { initializeFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -14,13 +15,9 @@ const firebaseConfig = {
 // Inisialisasi App (Singleton)
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 
-/**
- * SOLUSI G-RPC:
- * Cukup gunakan experimentalForceLongPolling saja. 
- * Ini adalah cara paling stabil untuk Next.js API Routes di Vercel.
- */
 export const db = initializeFirestore(app, {
   experimentalForceLongPolling: true,
 });
+export const auth = getAuth(app);
 
 export const storage = getStorage(app);
